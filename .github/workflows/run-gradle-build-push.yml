@@ -10,14 +10,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       JDK_VERSION: ${{ matrix.jdk }}    
-    environment:
-      name: hml
-      url: 'http://app-hml.com.br'
+    # environment:
+      # name: hml
+      # url: 'http://app-hml.com.br'
     steps: 
-      - name: multiline script 
-        run: |
-           gradle -v
-
+      - name: clean
+        run: gradle clean
+      - name: build
+        run: gradle build
+      - name: test
+        run: gradle test        
 
 
   # steps:
