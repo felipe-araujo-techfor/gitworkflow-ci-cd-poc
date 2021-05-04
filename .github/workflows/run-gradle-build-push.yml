@@ -1,11 +1,11 @@
 name: Run Gradle Build on push event
 
-on: push
-
-# on:
-#   push:
-#     branches:
-#       - develop
+on:
+  push:
+  pull_request: 
+    types:
+      - opened
+      - reopened
 
 jobs:
   gradle-project:
