@@ -22,7 +22,7 @@ jobs:
       # url: 'http://app-hml.com.br'
     steps: 
       - name: clean
-        run: ./gradle clean
+        run: gradle clean
       - name: build
         run: gradle build
       - name: test
