@@ -9,6 +9,7 @@ jobs:
       - name: Git Properties
         run: |
           echo "SHORT SHA: ${GITHUB_SHA::7}"
+          echo "SHORT REF: ${GITHUB_REF}"
 
 
     # container:
