@@ -1,23 +1,28 @@
 name: Run Gradle Build on push event
+
 on: push
+
+# on:
+#   push:
+#     branches:
+#       - develop
+
 jobs:
   gradle-project:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        jdk: [8, 11]
+        jdk: [11]
     runs-on: ${{ matrix.os }}
     env:
       JDK_VERSION: ${{ matrix.jdk }}    
-    environment:
-      name: hml
-      url: 'http://app-hml.com.br'
+    # environment:
+      # name: hml
+      # url: 'http://app-hml.com.br'
     steps: 
-      - name: multiline script 
-        run: |
-           gradle -v
-
+      - name: gradle version show
+        run: gradle -v
 
 
   # steps:
