@@ -3,6 +3,9 @@ on: push
 jobs:
   gradle-project:
     runs-on: ubuntu-latest
+    environment:
+      name: hml
+      url: 'test.com.br'
     steps: 
       - name: multiline script 
         run: |
