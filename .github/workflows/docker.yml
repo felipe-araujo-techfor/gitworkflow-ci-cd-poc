@@ -8,8 +8,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Git Properties
         run: |
-          echo "Branch: ${{ steps.vars.outputs.branch }}"
-          echo "Sha: ${{ steps.vars.outputs.sha_short }}"
+          echo "SHORT SHA: ${GITHUB_SHA::6}"
 
 
     # container:
