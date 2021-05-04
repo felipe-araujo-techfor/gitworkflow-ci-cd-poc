@@ -7,7 +7,7 @@ on:
       - reopened
       - synchronize
 env:
-  JDK_VERSION: 11
+  JDK_VERSION: '11'
 
 jobs:
   build:
