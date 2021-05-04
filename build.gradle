@@ -1,0 +1,77 @@
+plugins {
+	id 'org.springframework.boot' version "$springBootVersion"
+	id 'io.spring.dependency-management' version "$springManagementVersion"
+	id 'java'
+	id 'org.jetbrains.kotlin.jvm' version "$kotlinJvmVersion"
+	id "org.jetbrains.kotlin.plugin.allopen" version "$kotlinJvmVersion"
+	id 'pmd'
+}
+
+group = 'com.playkids.billingservice'
+version = "$version"
+sourceCompatibility = JavaVersion.VERSION_11
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.flywaydb:flyway-core'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	implementation "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+
+	implementation "org.jetbrains.kotlin:kotlin-reflect"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+//	testImplementation "org.testcontainers:postgresql:1.15.3"
+//	testImplementation "org.testcontainers:mockserver"
+//	testImplementation 'org.mock-server:mockserver-client-java:5.7.2'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
+}
+
+allOpen {
+	annotation("javax.persistence.Entity")
+}
+
+test {
+	useJUnitPlatform()
+	failFast true
+}
+
+pmd {
+	toolVersion = "$pmdVersion"
+	consoleOutput = true
+//	ruleSets = []
+	ignoreFailures = true
+}
+
+bootBuildImage {
+	imageName = "pk/billing-context"
+}
+
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "11"
+	}
+}
+compileTestKotlin {
+	kotlinOptions {
+		jvmTarget = "11"
+	}
+}
