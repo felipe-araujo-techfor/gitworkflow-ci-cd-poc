@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Git Properties
         run: |
-          echo "SHORT SHA: ${GITHUB_SHA::6}"
+          echo "SHORT SHA: ${GITHUB_SHA::7}"
 
 
     # container:
