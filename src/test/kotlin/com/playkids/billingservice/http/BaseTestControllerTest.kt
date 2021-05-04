@@ -24,10 +24,8 @@ import java.net.URI
 @DisplayName("Base Controller Test")
 class BaseTestControllerTest {
 
-    @Autowired
     lateinit var mockMvc: MockMvc
 
-    @MockBean
     lateinit var billingService: BillingService
 
     @Test

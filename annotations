@@ -1,8 +1,0 @@
-
-
-# Documentaçào de todas as env vars padrões do GA e como definir as suas próprias e/ou secrets:
-# https://docs.github.com/en/actions/reference/environment-variables
-# Documentação com todos os tipos de eventos que podem engatilhar um fluxo:
-# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
-# Discussão sobre como utilizar o evento de pull_request para detectar um approve:
-# https://github.community/t/feature-request-trigger-action-on-pull-request-approved/18413/2 (edited) 
