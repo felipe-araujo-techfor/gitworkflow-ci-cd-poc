@@ -22,4 +22,4 @@ jobs:
       # url: 'http://app-hml.com.br'
     steps: 
       - name: Checkout repository
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
