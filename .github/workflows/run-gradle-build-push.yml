@@ -1,4 +1,4 @@
-name: Run Gradle Build on push event
+name: Gradle CI on pull_request event
 
 on:
   pull_request: 
@@ -8,7 +8,7 @@ on:
       - synchronize
 
 jobs:
-  gradle-project:
+  setup:
     strategy:
       fail-fast: false
       matrix:
@@ -22,4 +22,12 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.jdk }}
-          distribution: 'adopt'        
+          distribution: 'adopt'
+  build:
+    needs: [setup]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2    
+      - name: Build with Gradle
+        run: ./gradlew build
