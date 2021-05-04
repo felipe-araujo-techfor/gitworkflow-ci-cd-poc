@@ -9,7 +9,7 @@ jobs:
         jdk: [8, 11]
     runs-on: ${{ matrix.os }}
     env:
-      JDK_VERSION:  ${{ matrix.jdk }}    
+      JDK_VERSION: ${{ matrix.jdk }}    
     environment:
       name: hml
       url: 'http://app-hml.com.br'
