@@ -1,5 +1,12 @@
 name: Run Gradle Build on push event
+
 on: push
+
+# on:
+#   push:
+#     branches:
+#       - develop
+
 jobs:
   gradle-project:
     strategy:
@@ -15,7 +22,7 @@ jobs:
       # url: 'http://app-hml.com.br'
     steps: 
       - name: clean
-        run: gradle clean
+        run: ./gradle clean
       - name: build
         run: gradle build
       - name: test
