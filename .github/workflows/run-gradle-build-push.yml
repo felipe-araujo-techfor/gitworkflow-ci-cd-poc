@@ -15,11 +15,6 @@ jobs:
         os: [ubuntu-latest]
         jdk: [11]
     runs-on: ${{ matrix.os }}
-    # env:
-      # JDK_VERSION: ${{ matrix.jdk }}
-    # environment:
-      # name: hml
-      # url: 'http://app-hml.com.br'
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v2
