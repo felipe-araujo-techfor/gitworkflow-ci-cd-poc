@@ -6,4 +6,4 @@ jobs:
     steps: 
       - name: multiline script 
         run: |
-           gradle clean build test
+           gradle -v
