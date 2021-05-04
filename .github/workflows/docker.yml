@@ -4,9 +4,16 @@ on: push
 jobs:
   build-container:
     runs-on: ubuntu-latest
-    container:
-      image: adoptopenjdk/openjdk11-openj9:jdk-11.0.10_9_openj9-0.24.0-alpine
     steps:
-      - name: Docker log
+      - uses: actions/checkout@v2
+      - name: Git Properties
         run: |
-          java -version
+           Git commit hash ${GITHUB_SHA}
+
+
+    # container:
+    #   image: adoptopenjdk/openjdk11-openj9:jdk-11.0.10_9_openj9-0.24.0-alpine
+    # steps:
+    #   - name: Docker log
+    #     run: |
+    #       java -version
