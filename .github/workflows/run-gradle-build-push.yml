@@ -1,0 +1,9 @@
+name: Run Gradle Build on push event
+on: push
+jobs:
+  gradle-project:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: multiline script 
+        run: |
+           gradle clean build test

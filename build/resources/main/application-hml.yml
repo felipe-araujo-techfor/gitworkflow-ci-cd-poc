@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://postgres:5432/billing-db #{URL_HML}
-    username: postgres #{USER_HML} Replace environment variable
-    password: postgres #{PASS_HML}
-    driver-class-name: org.postgresql.Driver
