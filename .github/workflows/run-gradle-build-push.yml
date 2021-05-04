@@ -1,11 +1,11 @@
 name: Run Gradle Build on push event
 
-on: push
-
-# on:
-#   push:
-#     branches:
-#       - develop
+on:
+  push:
+  pull_request: 
+    types:
+      - opened
+      - reopened
 
 jobs:
   gradle-project:
@@ -21,15 +21,5 @@ jobs:
       # name: hml
       # url: 'http://app-hml.com.br'
     steps: 
-      - name: gradle version show
-        run: gradle -v
-
-
-  # steps:
-  #   - name: Checkout Repo
-  #     uses: actions/checkout@v2
-  #   ...
-  #   - name: Setup Java
-  #     uses: actions/setup-java@v1
-  #     with:
-  #       java-version: ${{ matrix.jdk }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
