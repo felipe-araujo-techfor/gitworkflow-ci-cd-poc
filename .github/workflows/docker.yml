@@ -1,4 +1,4 @@
-name: Docker CI
+name: Docker CI on ECR
 
 on:
   push:
@@ -7,39 +7,50 @@ on:
     branches: [ main ]
 
 jobs:
-  build-container:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build image
-        run: docker build . --file Dockerfile -t ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}
-
-      - name: Tag image
-        run: docker tag ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}:latest ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}:${GITHUB_REF}-${GITHUB_SHA::7}
-
-      # - name: Push to ECR
-      #   id: ecr
-      #   uses: jwalton/gh-ecr-login@v1
-      #   with:
-      #     access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     region: us-east-1
-      # - name: Push to ECR
-      #   run: |
-      #     docker tag my-image ${{ steps.ecr.outputs.account }}.dkr.ecr.us-east-1.amazonaws.com/my-image:v1
-      #     docker push ${{ steps.ecr.outputs.account }}.dkr.ecr.us-east-1.amazonaws.com/my-image:v1
-
-      # - name: Push to ECR
-      #   run: docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}
-
-      - name: TEST - Git Properties
+      - name: DEBUG
         run: |
           echo "GITHUB_SHA: ${GITHUB_SHA::7}"
+          echo "AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
+          echo "AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           echo "GITHUB_REF: ${GITHUB_REF}"
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
           echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
           echo "Repo name: ${{ github.event.repository.name }}"
           echo "docker build name: ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}"
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${GITHUB_REPOSITORY}
+          IMAGE_TAG: ${GITHUB_REF}-${GITHUB_SHA::7}
+        run: |
+          echo "Build a docker container and push it to ECR"
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "Pushing image to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      # - name: Build image
+      #   run: docker build . --file Dockerfile -t ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}
+
+      # - name: Tag image
+      #   run: docker tag ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}:latest ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}:${GITHUB_REF}-${GITHUB_SHA::7}
 
