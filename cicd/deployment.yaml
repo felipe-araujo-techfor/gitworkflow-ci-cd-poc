@@ -2,21 +2,21 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   namespace: billing-develop
-  name: whoami
+  name: billing-service
   labels:
-    app: whoami
+    app: billing-service
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: whoami
+      app: billing-service
   template:
     metadata:
       labels:
-        app: whoami
+        app: billing-service
     spec:
       containers:
-        - name: whoami
+        - name: billing-service
           image: 133876145150.dkr.ecr.us-east-1.amazonaws.com/gitworkflow-ci-cd-poc
           ports:
             - name: web
