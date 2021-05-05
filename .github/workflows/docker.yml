@@ -28,8 +28,8 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{GITHUB_REPOSITORY}}
-          IMAGE_TAG: ${{ GITHUB_REF }}-${{ GITHUB_SHA::7 }}
+          ECR_REPOSITORY: ${{ github.event.repository.name }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --file Dockerfile .
           echo "Pushing image to ECR..."
