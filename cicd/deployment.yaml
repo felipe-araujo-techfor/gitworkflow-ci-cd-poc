@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  namespace: gitworkflow-ci-cd-poc
+  namespace: billing-develop
   name: whoami
   labels:
     app: whoami
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoami
+          image: 133876145150.dkr.ecr.us-east-1.amazonaws.com/gitworkflow-ci-cd-poc
           ports:
             - name: web
               containerPort: 80

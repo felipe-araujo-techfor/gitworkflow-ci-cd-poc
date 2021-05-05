@@ -31,20 +31,33 @@ jobs:
           ECR_REPOSITORY: ${{ github.event.repository.name }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.ref }}-${GITHUB_SHA::7} --file Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7} --file Dockerfile .
           echo "Pushing image to ECR..."
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.ref }}-${GITHUB_SHA::7}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: DEBUG
-        run: |
-          echo "GITHUB_SHA: ${GITHUB_SHA::7}"
-          echo "github.ref: ${{ github.ref }}"
-          echo "GITHUB_REF: ${GITHUB_REF}"
-          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-          echo "Repo name: ${{ github.event.repository.name }}"
-          echo "docker build name: ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}"
+      - name: Push manifests to Flux repo
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'cicd/deployment.yaml'
+          destination_repo: 'Playkids/flux-repo'
+          destination_branch: 'develop'
+          destination_folder: 'deployments'
+          user_email: 'cicd@playkids.com'
+          user_name: 'CI CD Worker'
+          commit_message: 'Updating application on cluster.'
+
+      # - name: DEBUG
+      #   run: |
+      #     echo "GITHUB_SHA: ${GITHUB_SHA::7}"
+      #     echo "github.ref: ${{ github.ref }}"
+      #     echo "GITHUB_REF: ${GITHUB_REF}"
+      #     echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+      #     echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+      #     echo "Repo name: ${{ github.event.repository.name }}"
+      #     echo "docker build name: ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}"
       # - name: Build image
       #   run: docker build . --file Dockerfile -t ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }}
 
