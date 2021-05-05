@@ -3,8 +3,8 @@ name: Container
 on:
   push:
     branches: [ main ]
-  pull_request: #temp
-    branches: [ main ]
+  # pull_request: #temp
+  #   branches: [ main ]
 
 jobs:
   build-container:
