@@ -3,8 +3,6 @@ name: Docker CI on ECR
 on:
   push:
     branches: [ main ]
-  pull_request: #TEMPORARIO APENAS PRA TEST
-    branches: [ main ]
 
 env:
   # BRANCH_NAME: ${GITHUB_REF##*/}
