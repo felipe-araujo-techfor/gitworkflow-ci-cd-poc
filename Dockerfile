@@ -3,6 +3,8 @@ LABEL maintainer="PK Team"
 LABEL version="0.0.1-SNAPSHOT"
 
 ARG JAR_FILE=build/libs/*.jar
+# ARG PROFILE=dev 
+# , "-Dspring.profiles.active=$PROFILE",
 
 WORKDIR /app
 RUN mkdir /opt/app
