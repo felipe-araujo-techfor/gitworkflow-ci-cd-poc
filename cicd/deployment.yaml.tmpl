@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  namespace: billing-${BRANCH_NAME}
+  namespace: ${NAMESPACE}
   name: ${REPO_NAME}
   labels:
     app: ${REPO_NAME}
