@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: billing-${BRANCH_NAME}
+  name: ${REPO_NAME}
+  labels:
+    app: ${REPO_NAME}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ${REPO_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${REPO_NAME}
+    spec:
+      containers:
+        - name: ${REPO_NAME}
+          image: ${ECR}/${REPO_NAME}
+          ports:
+            - name: web
+              containerPort: 80 

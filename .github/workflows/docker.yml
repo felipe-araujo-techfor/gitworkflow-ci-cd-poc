@@ -6,6 +6,13 @@ on:
   pull_request: #TEMPORARIO APENAS PRA TEST
     branches: [ main ]
 
+env:
+  BRANCH_NAME: ${{GITHUB_REF##*/}}
+  NAMESPACE: 'billing-develop'
+  PROJECT_NAME: ${{GITHUB_REPOSITORY##*/}}
+  ECR: 133876145150.dkr.ecr.us-east-1.amazonaws.com
+  REPO_NAME: ${{ github.event.repository.name }}
+
 jobs:
   deploy:
     name: Deploy
@@ -34,7 +41,10 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7} --file Dockerfile .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}"
+
+      - name: xx
+        run: envsubst <./cicd/deployment.yaml.tmpl >./cicd/deployment.yaml
 
       - name: Push manifests to Flux repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 
