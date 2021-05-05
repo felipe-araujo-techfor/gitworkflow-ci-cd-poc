@@ -8,6 +8,7 @@ env:
   NAMESPACE: 'billing-develop'
   ECR: 133876145150.dkr.ecr.us-east-1.amazonaws.com
   REPO_NAME: ${{ github.event.repository.name }}
+  SERVICEPORT: 12021
 
 jobs:
   deploy:
@@ -41,8 +42,9 @@ jobs:
       - name: Replace variable on template manifest
         run: |
           export SHORT_SHA=${GITHUB_SHA::7}
-          export BRANCH_NAME=${GITHUB_REF##*/}          
+          export BRANCH_NAME=${GITHUB_REF##*/} 
           envsubst <./cicd/deployment.yaml.tmpl >./cicd/deployment.yaml
+          envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
 
       - name: Push manifests to Flux repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 

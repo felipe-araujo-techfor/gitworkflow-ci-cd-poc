@@ -14,6 +14,3 @@ RUN mkdir /opt/app
 COPY --from=gradleimage ${JAR_FILE} /opt/app/pk-billing.jar
 
 ENTRYPOINT ["java", "-jar", "/opt/app/pk-billing.jar"]
-
-ENV PORT 9000
-EXPOSE $PORT
