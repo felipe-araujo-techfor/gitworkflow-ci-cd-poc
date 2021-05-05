@@ -7,11 +7,12 @@ on:
     branches: [ main ]
 
 env:
-  BRANCH_NAME: ${{GITHUB_REF##*/}}
+  BRANCH_NAME: ${GITHUB_REF##*/}
   NAMESPACE: 'billing-develop'
   PROJECT_NAME: ${{GITHUB_REPOSITORY##*/}}
   ECR: 133876145150.dkr.ecr.us-east-1.amazonaws.com
   REPO_NAME: ${{ github.event.repository.name }}
+  SHORT_SHA: ${{GITHUB_SHA::7}}
 
 jobs:
   deploy:
