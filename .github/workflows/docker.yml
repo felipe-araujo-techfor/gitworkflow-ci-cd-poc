@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build the Docker image
-      - run: docker build -t ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }} . --file Dockerfile --tag my-image-name:$(date +%s)
+      # - name: Build the Docker image
+      # - run: docker build -t ${GITHUB_REPOSITORY}-${GITHUB_REF}/${{ github.event.repository.name }} . --file Dockerfile --tag my-image-name:$(date +%s)
       # --build-arg PROFILE=${PROFILE}
 
       # - name: Build and push
