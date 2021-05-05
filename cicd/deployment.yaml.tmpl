@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ${REPO_NAME}
-          image: ${ECR}/${REPO_NAME}
+          image: ${ECR}/${REPO_NAME}:${SHORT_SHA}
           ports:
             - name: web
               containerPort: 80 
