@@ -3,8 +3,8 @@ name: Docker CI
 on:
   push:
     branches: [ main ]
-  # pull_request: TEMPORARIO APENAS PRA TEST
-  #   branches: [ main ]
+  pull_request: #TEMPORARIO APENAS PRA TEST
+    branches: [ main ]
 
 jobs:
   build-container:
