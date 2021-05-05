@@ -44,7 +44,7 @@ jobs:
           source_file: 'cicd/deployment.yaml'
           destination_repo: 'Playkids/flux-repo'
           destination_branch: 'develop'
-          destination_folder: 'deployments'
+          destination_folder: 'deployments/gitworkflow-ci-cd-poc'
           user_email: 'cicd@playkids.com'
           user_name: 'CI CD Worker'
           commit_message: 'Updating application on cluster.'
