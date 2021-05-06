@@ -8,7 +8,7 @@ env:
   NAMESPACE: 'billing-develop'
   ECR: 133876145150.dkr.ecr.us-east-1.amazonaws.com
   REPO_NAME: ${{ github.event.repository.name }}
-  SERVICEPORT: 1202
+  SERVICEPORT: 12021
 
 jobs:
   deploy:
@@ -59,7 +59,9 @@ jobs:
           commit_message: 'Updating application on cluster.'
 
       - name: Replace variable on service template manifest
-        run: envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
+        run: |
+          export SHORT_SHA=${GITHUB_SHA::7}
+          envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
 
       - name: Push manifests to Flux repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 
@@ -72,4 +74,4 @@ jobs:
           destination_folder: 'deployments/gitworkflow-ci-cd-poc'
           user_email: 'cicd@playkids.com'
           user_name: 'CI CD Worker'
-          commit_message: 'Updating application on cluster.'        
+          commit_message: 'Updating application on cluster.'
