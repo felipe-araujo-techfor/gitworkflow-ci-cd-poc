@@ -9,6 +9,7 @@ env:
   ECR: 133876145150.dkr.ecr.us-east-1.amazonaws.com
   REPO_NAME: ${{ github.event.repository.name }}
   SERVICEPORT: 12021
+  TEST_TPM: 9999
 
 jobs:
   deploy:
