@@ -42,11 +42,13 @@ jobs:
       - name: Replace variable on development template manifest
         run: |
           export SHORT_SHA=${GITHUB_SHA::7}
-          export BRANCH_NAME=${GITHUB_REF##*/} 
-          envsubst <./cicd/deployment.yaml.tmpl >./cicd/deployment.yaml
+          export BRANCH_NAME=${GITHUB_REF##*/}           
+          run: envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
 
-      - name: Replace variable on service template manifest
-        run: envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
+# envsubst <./cicd/deployment.yaml.tmpl >./cicd/deployment.yaml
+
+      # - name: Replace variable on service template manifest
+        # run: envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
 
       - name: Push manifests to Flux repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 
