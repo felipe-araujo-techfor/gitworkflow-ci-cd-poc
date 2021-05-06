@@ -39,12 +39,14 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}"
 
-      - name: Replace variable on template manifest
+      - name: Replace variable on development template manifest
         run: |
           export SHORT_SHA=${GITHUB_SHA::7}
           export BRANCH_NAME=${GITHUB_REF##*/} 
           envsubst <./cicd/deployment.yaml.tmpl >./cicd/deployment.yaml
-          envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
+
+      - name: Replace variable on service template manifest
+        run: envsubst <./cicd/service.yaml.tmpl >./cicd/service.yaml
 
       - name: Push manifests to Flux repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1 
