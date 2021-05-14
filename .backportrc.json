@@ -1,0 +1,4 @@
+{
+    "upstream": "felipe-araujo-techfor/gitworkflow-ci-cd-poc",
+    "targetBranchChoices": ["main", "production"] 
+}
