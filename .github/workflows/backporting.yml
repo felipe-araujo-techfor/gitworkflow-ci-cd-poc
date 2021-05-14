@@ -1,31 +1,48 @@
 name: Backport
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
       - labeled
- 
+
 jobs:
   backport:
-    name: Backport Action
     runs-on: ubuntu-latest
+    name: Backport
     steps:
       - name: Backport
-        uses: sqren/backport-github-action@v1
+        uses: tibdex/backport@v1
         with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+# name: Backport
+# on:
+#   pull_request_target:
+#     types:
+#       - closed
+#       - labeled
  
-          # Required
-          # Backport PR by adding a label
-          # Example: PRs labeled with "backport-to-staging" will be backported to "staging"
-          backport-to-develop: '^backport-to-(.*)$'
+# jobs:
+#   backport:
+#     name: Backport Action
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Backport
+#         uses: sqren/backport-github-action@v1
+#         with:
+#           access_token: ${{ secrets.GITHUB_TOKEN }}
+ 
+#           # Required
+#           # Backport PR by adding a label
+#           # Example: PRs labeled with "backport-to-staging" will be backported to "staging"
+#           backport-to-develop: '^backport-to-(.*)$'
  
           
-          # Optional
-          # Title for the backport PR
-          # Example: [branch-a] My commit msg
-          # pr_title: '[{targetBranch}] {commitMessages}'
+#           # Optional
+#           # Title for the backport PR
+#           # Example: [branch-a] My commit msg
+#           # pr_title: '[{targetBranch}] {commitMessages}'
  
-          # Optional
-          # Comma separated list of labels that will be added to the backport PR.
-          # target_pr_labels: 'backport'
+#           # Optional
+#           # Comma separated list of labels that will be added to the backport PR.
+#           # target_pr_labels: 'backport'
