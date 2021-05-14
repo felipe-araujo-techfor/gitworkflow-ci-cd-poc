@@ -17,7 +17,7 @@ jobs:
       - name: Backport commit
         uses: qcastel/github-actions-backport@v0.7.0
         with:
-          backport-branches-regex: "develop"
+          backport-branches-regex: "releases*"
 
           reviewers-teams: "['pkapp-platforms']"
           
@@ -26,35 +26,4 @@ jobs:
           
           access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
-
-# name: Backport
-# on:
-#   pull_request_target:
-#     types:
-#       - closed
-#       - labeled
- 
-# jobs:
-#   backport:
-#     name: Backport Action
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Backport
-#         uses: sqren/backport-github-action@v1
-#         with:
-#           access_token: ${{ secrets.GITHUB_TOKEN }}
- 
-#           # Required
-#           # Backport PR by adding a label
-#           # Example: PRs labeled with "backport-to-staging" will be backported to "staging"
-#           backport-to-develop: '^backport-to-(.*)$'
- 
-          
-#           # Optional
-#           # Title for the backport PR
-#           # Example: [branch-a] My commit msg
-#           # pr_title: '[{targetBranch}] {commitMessages}'
- 
-#           # Optional
-#           # Comma separated list of labels that will be added to the backport PR.
-#           # target_pr_labels: 'backport'
+# https://github.com/qcastel/github-actions-backport
