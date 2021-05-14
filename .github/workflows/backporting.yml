@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Backport
     steps:
-      - name: Backport
-        uses: qcastel/github-actions-backport@master
+      - name: Backport commit
+        uses: qcastel/github-actions-backport@v0.7.0
         with:
           backport-branches-regex: "develop"
 
