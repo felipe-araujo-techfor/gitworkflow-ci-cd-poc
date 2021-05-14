@@ -16,8 +16,8 @@ jobs:
 
           reviewers-teams: "['pkapp-platforms']"
           
-          # git-release-bot-name: "release-bot"
-          # git-release-bot-email: "release-bot@example.com"
+          git-release-bot-name: "Git-action-boot"
+          git-release-bot-email: "git-action-boot@playkids.com"
           
           access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
