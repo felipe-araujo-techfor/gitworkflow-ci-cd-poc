@@ -18,7 +18,7 @@ jobs:
           # Required
           # Backport PR by adding a label
           # Example: PRs labeled with "backport-to-staging" will be backported to "staging"
-          backport-to-staging: '^backport-to-(.*)$'
+          backport-to-develop: '^backport-to-(.*)$'
  
           # Optional
           # Title for the backport PR
