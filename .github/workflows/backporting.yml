@@ -3,7 +3,6 @@ on:
   pull_request:
     types:
       - closed
-      - labeled
 
 jobs:
   backport:
@@ -13,12 +12,12 @@ jobs:
       - name: Backport
         uses: qcastel/github-actions-backport@master
         with:
-          backport-branches-regex: "develop*"
+          backport-branches-regex: "develop"
 
           reviewers-teams: "['pkapp-platforms']"
           
-          git-release-bot-name: "release-bot"
-          git-release-bot-email: "release-bot@example.com"
+          # git-release-bot-name: "release-bot"
+          # git-release-bot-email: "release-bot@example.com"
           
           access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 

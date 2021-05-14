@@ -1,11 +1,14 @@
 name: Gradle CI on pull_request event
 
 on:
-  pull_request: 
-    types:
-      - opened
-      - reopened
-      - synchronize
+  push:
+    branches: [ develop ]
+# on:
+#   pull_request: 
+#     types:
+#       - opened
+#       - reopened
+#       - synchronize
 
 jobs:
   build:
