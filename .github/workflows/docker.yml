@@ -2,7 +2,7 @@ name: Docker CI on ECR
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ] #temp, after change from main
 
 env:
   NAMESPACE: 'billing-develop'
