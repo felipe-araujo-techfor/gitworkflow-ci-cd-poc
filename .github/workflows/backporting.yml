@@ -11,9 +11,17 @@ jobs:
     name: Backport
     steps:
       - name: Backport
-        uses: tibdex/backport@v1
+        uses: qcastel/github-actions-backport@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          backport-branches-regex: "develop*"
+
+          reviewers-teams: "['pkapp-platforms']"
+          
+          git-release-bot-name: "release-bot"
+          git-release-bot-email: "release-bot@example.com"
+          
+          access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
 
 # name: Backport
 # on:
