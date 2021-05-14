@@ -4,22 +4,63 @@ on:
     types:
       - closed
 
+env:
+  GIT_RELEASE_BOT_NAME: pk-boot
+  GIT_RELEASE_BOT_EMAIL: pk-boot@playkids.com
+  REVIEWERS_TEAMS: pkapp-platforms
+
 jobs:
   backport:
     runs-on: ubuntu-latest
     name: Backport
     steps:
-      - name: Backport commit
-        uses: qcastel/github-actions-backport@v0.7.0
-        with:
-          backport-branches-regex: "develop"
+      - name: Backport
+        run: |
+          echo "Git checkout branch ${GITHUB_REF##*/}"
+          git checkout ${GITHUB_REF##*/}
+          echo "Git reset hard to ${GITHUB_SHA}"
+          git reset --hard ${GITHUB_SHA} 
 
-          reviewers-teams: "['pkapp-platforms']"
+          echo "Setup git user name to '$GIT_RELEASE_BOT_NAME'"
+          git config --global user.name "$GIT_RELEASE_BOT_NAME";
+          echo "Setup git user email to '$GIT_RELEASE_BOT_EMAIL'"
+          git config --global user.email "$GIT_RELEASE_BOT_EMAIL";  
+
+          cat <<- EOF > $HOME/.netrc
+              machine github.com
+              login $GIT_RELEASE_BOT_NAME
+              password $GITHUB_ACCESS_TOKEN
+              machine api.github.com
+              login $GIT_RELEASE_BOT_NAME
+              password $GITHUB_ACCESS_TOKEN
+          EOF
+          chmod 600 $HOME/.netrc
+
+          if [[ -n $REVIEWERS_TEAMS ]]; then
+            echo "Team reviewers: $REVIEWERS_TEAMS"
+            if [[ -n $REVIEWERS_USERS ]]; then
+                reviewers="${reviewers},"
+            fi
+            reviewers="${reviewers}\"team_reviewers\": $REVIEWERS_TEAMS"
+          else
+            echo "No team reviewer defined for this github action"
+          fi
+          echo "The reviewers for those PRs: $reviewers"
+
+
+
+
+      # - name: Backport commit
+      #   uses: qcastel/github-actions-backport@v0.7.0
+      #   with:
+      #     backport-branches-regex: "develop"
+
+      #     reviewers-teams: "['pkapp-platforms']"
           
-          git-release-bot-name: "Git-action-boot"
-          git-release-bot-email: "git-action-boot@playkids.com"
+      #     git-release-bot-name: "Git-action-boot"
+      #     git-release-bot-email: "git-action-boot@playkids.com"
           
-          access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+      #     access-token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
 
 # name: Backport
